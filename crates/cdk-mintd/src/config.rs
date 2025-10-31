@@ -226,10 +226,12 @@ pub struct LdkNode {
     pub reserve_fee_min: Amount,
     /// Bitcoin network (mainnet, testnet, signet, regtest)
     pub bitcoin_network: Option<String>,
-    /// Chain source type (esplora or bitcoinrpc)
+    /// Chain source type (electrum, esplora or bitcoinrpc)
     pub chain_source_type: Option<String>,
     /// Esplora URL (when chain_source_type = "esplora")
     pub esplora_url: Option<String>,
+    /// Electrum URL (when chain_source_type = "electrum")
+    pub electrum_url: Option<String>,
     /// Bitcoin RPC configuration (when chain_source_type = "bitcoinrpc")
     pub bitcoind_rpc_host: Option<String>,
     pub bitcoind_rpc_port: Option<u16>,
@@ -262,6 +264,7 @@ impl Default for LdkNode {
             bitcoin_network: None,
             chain_source_type: None,
             esplora_url: None,
+            electrum_url: None,
             bitcoind_rpc_host: None,
             bitcoind_rpc_port: None,
             bitcoind_rpc_user: None,

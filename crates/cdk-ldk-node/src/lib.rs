@@ -74,8 +74,12 @@ pub struct BitcoinRpcConfig {
 pub enum ChainSource {
     /// Use an Esplora server for blockchain data
     ///
-    /// Contains the URL of the Esplora server endpoint
+    //// Contains the URL of the Esplora server endpoint
     Esplora(String),
+    /// Use an Electrum server for blockchain data
+    ///
+    /// Contains the URL of the Electrum erver endpoint
+    Electrum(String),
     /// Use Bitcoin Core RPC for blockchain data
     ///
     /// Contains the configuration for connecting to Bitcoin Core
@@ -132,6 +136,9 @@ impl CdkLdkNode {
         match chain_source {
             ChainSource::Esplora(esplora_url) => {
                 builder.set_chain_source_esplora(esplora_url, None);
+            }
+            ChainSource::Electrum(electrum_url) => {
+                builder.set_chain_source_electrum(electrum_url, None);
             }
             ChainSource::BitcoinRpc(BitcoinRpcConfig {
                 host,

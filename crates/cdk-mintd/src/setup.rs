@@ -249,7 +249,7 @@ impl LnBackendSetup for config::LdkNode {
                     .bitcoind_rpc_password
                     .clone()
                     .unwrap_or_else(|| "testpass".to_string());
-
+                tracing::info!("Using bitcoinrpc chain source: {}:{}", host, port);
                 cdk_ldk_node::ChainSource::BitcoinRpc(cdk_ldk_node::BitcoinRpcConfig {
                     host,
                     port,
@@ -257,11 +257,20 @@ impl LnBackendSetup for config::LdkNode {
                     password,
                 })
             }
+            "electrum" => {
+                let electrum_url = self
+                    .electrum_url
+                    .clone()
+                    .unwrap_or_else(|| "https://electrum.blockstream.info".to_string());
+                tracing::info!("Using electrum chain source: {}", electrum_url);
+                cdk_ldk_node::ChainSource::Electrum(electrum_url)
+            }
             _ => {
                 let esplora_url = self
                     .esplora_url
                     .clone()
                     .unwrap_or_else(|| "https://mutinynet.com/api".to_string());
+                tracing::info!("Using esplora chain source: {}", esplora_url);
                 cdk_ldk_node::ChainSource::Esplora(esplora_url)
             }
         };
